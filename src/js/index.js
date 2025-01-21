@@ -1,5 +1,4 @@
 // main entry point (e.g., src/js/index.js)
-
 import "../styles/index.css";
 import barba from "@barba/core";
 import { gsap } from "gsap";
