@@ -1,27 +1,36 @@
-// export default {
-//   root: "src",
-//   server: {
-//     cors: "*",
-//     hmr: {},
-//   },
-//   build: {
-//     minify: true,
-//     outDir: "../src/dist",
-//     emptyOutDir: true,
-//     rollupOptions: {
-//       input: "/js/index.js",
-//       output: {
-//         format: "umd",
-//         entryFileNames: "index.js",
-//         compact: true,
-//       },
-//     },
-//   },
-//   envDir: "../",
-// };
-
 import { defineConfig } from "vite";
 import path from "path";
+
+const configs = {
+  main: {
+    minify: true,
+    outDir: "../src/dist/main",
+    emptyOutDir: true,
+    rollupOptions: {
+      input: "/js/index.js",
+      output: {
+        format: "umd",
+        entryFileNames: "index.js",
+        compact: true,
+        inlineDynamicImports: true,
+      },
+    },
+  },
+  test: {
+    minify: true,
+    outDir: "../src/dist/test",
+    emptyOutDir: true,
+    rollupOptions: {
+      input: "/js/test.js",
+      output: {
+        format: "umd",
+        entryFileNames: "test.js",
+        compact: true,
+        inlineDynamicImports: true,
+      },
+    },
+  },
+};
 
 export default defineConfig({
   root: "src",
@@ -29,27 +38,8 @@ export default defineConfig({
     cors: "*",
     hmr: {},
   },
-  build: {
-    minify: true,
-    outDir: "../src/dist",
-    emptyOutDir: true,
-    rollupOptions: {
-      input: {
-        main: "/js/index.js",
-        test: "/js/test.js",
-        test2: "/js/test2.js",
-      },
-      output: {
-        format: "cjs",
-        entryFileNames: "[name].js",
-        compact: true,
-        inlineDynamicImports: false,
-      },
-    },
-  },
+  build: configs.main, // toggle between "test" and "main" to build respective files
   envDir: "../",
-
-  // Add alias for better path resolution
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"), // Alias '@' maps to 'src'
@@ -57,6 +47,7 @@ export default defineConfig({
       "@components": path.resolve(__dirname, "src/js/components"),
       "@pages": path.resolve(__dirname, "src/js/pages"),
       "@utils": path.resolve(__dirname, "src/js/utils"),
+      "@global": path.resolve(__dirname, "src/js/global"),
     },
   },
 });
