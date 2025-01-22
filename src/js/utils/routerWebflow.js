@@ -3,7 +3,7 @@
 // make sure to update the CDN links
 
 (function () {
-  const head = document.getElementsByTagName("head")[0];
+  const head = document.getElementsByTagName("head")[0]; //remember to update to <body> if necessary
 
   const isWebflow = window.location.hostname.includes("webflow.io");
 
