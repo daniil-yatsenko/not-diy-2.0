@@ -34,11 +34,16 @@ export default defineConfig({
     outDir: "../src/dist",
     emptyOutDir: true,
     rollupOptions: {
-      input: "/js/index.js",
+      input: {
+        main: "/js/index.js",
+        test: "/js/test.js",
+        test2: "/js/test2.js",
+      },
       output: {
-        format: "umd",
-        entryFileNames: "index.js",
+        format: "cjs",
+        entryFileNames: "[name].js",
         compact: true,
+        inlineDynamicImports: false,
       },
     },
   },
