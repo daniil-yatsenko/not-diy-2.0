@@ -60,12 +60,27 @@ const buttonsInit = (page) => {
       );
     });
     split.chars.forEach((char, index) => {
+      let charDirection = index % 2 === 0 ? 1 : -1;
       tl.to(
         char,
         {
-          rotate: 360,
+          duration: 0.2,
+          y: `+=${-2 * height * charDirection}rem`,
           ease: "power3.inOut",
           delay: 0.2,
+        },
+        0
+      );
+    });
+    split.chars.forEach((char, index) => {
+      let charDirection = index % 2 === 0 ? 1 : -1;
+      tl.to(
+        char,
+        {
+          duration: 0.2,
+          y: `+=${2 * height * charDirection}rem`,
+          ease: "power3.inOut",
+          delay: 0.4,
         },
         0
       );

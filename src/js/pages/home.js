@@ -26,18 +26,6 @@ const homeInit = (page = document) => {
       id: "bgImage",
     },
   });
-
-  tl.to(heading, {
-    y: "-30vh",
-    ease: "linear",
-    scrollTrigger: {
-      trigger: section,
-      start: "0",
-      end: "center top",
-      scrub: true,
-      id: "heading",
-    },
-  });
 };
 
 /////////////////////////////////////
