@@ -1,6 +1,5 @@
 import { gsap } from "gsap";
 import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
-import { CustomEase } from "gsap/CustomEase";
 
 gsap.defaults({
   ease: "power2.inOut",
@@ -30,7 +29,6 @@ async function stopCSSAnimation() {
 
 const loaderAnimation = async () => {
   gsap.registerPlugin(MorphSVGPlugin);
-  gsap.registerPlugin(CustomEase);
   let tl = gsap.timeline();
 
   // wait until the loader
@@ -94,24 +92,23 @@ const loaderAnimation = async () => {
   });
 
   //
-  //
+  //remove loader while keeping the overlay
   //
 
   const loader = document.querySelector(".loader");
   const overlay = document.querySelector(".overlay");
   const navbar = document.querySelector(".navbar");
 
-  tl.set(overlay, { borderBottom: "1px solid black" });
-  tl.to(overlay, {
-    height: 0,
-    duration: 2,
-    ease: CustomEase.create(
-      "custom",
-      "M0,0 C0.012,0.038 0.041,-0.056 0.078,-0.043 0.385,0.074 0.439,0.786 0.605,0.891 0.844,1.043 0.818,1.001 1,1 "
-    ),
+  tl.set(loader, { borderBottom: "1px solid black" });
+  tl.set(navbar, { y: "-100%" });
+  tl.to(loader, {
+    y: "-120vh",
+    duration: 1.5,
+    delay: 0.3,
+    ease: "expo.inOut",
   });
   tl.to(
-    overlay,
+    loader,
     {
       borderBottomLeftRadius: "40vw",
       borderBottomRightRadius: "40vw",
@@ -119,6 +116,10 @@ const loaderAnimation = async () => {
     },
     "<"
   );
+  tl.to(navbar, { y: "", ease: "expo.inOut", duration: 0.4, delay: -0.2 });
+  tl.set(loader, { display: "none", y: "" });
+  tl.set(overlay, { display: "none" });
+  return tl.then(() => {});
 };
 
 export { loaderAnimation };

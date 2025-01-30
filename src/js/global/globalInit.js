@@ -7,10 +7,10 @@ var lenisMain = lenisInit();
 // var lenisMain;
 export { lenisMain };
 
-const globalInit = () => {
+const globalInit = async () => {
   navbarSelector();
   componentsInit(document);
-  loaderAnimation();
+  await loaderAnimation();
   console.log("global init");
 };
 

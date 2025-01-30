@@ -124,7 +124,6 @@ export const tableRowsCleanup = (page) => {
     rows.forEach((row) => {
       const listeners = eventListenersMap.get(row);
       if (listeners) {
-        console.log(listeners);
         row.removeEventListener("mouseover", row.hoverInListener);
         row.removeEventListener("mouseout", row.hoverOutListener);
         eventListenersMap.delete(row);
