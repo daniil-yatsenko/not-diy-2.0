@@ -1,6 +1,48 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { lenisMain } from "../global/globalInit.js";
+import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
+
+const homeEnter = async (page) => {
+  // return;
+  gsap.registerPlugin(ScrambleTextPlugin);
+  const navbar = document.querySelector(".navbar");
+  const overlay = document.querySelector(".overlay");
+  const circle = page.querySelector("[hero-image]");
+  const text = page.querySelector(".hero_text-wrapper").firstChild;
+
+  let tl = gsap.timeline();
+
+  let origString = text.innerHTML;
+  tl.set(text, { y: "10rem", scrambleText: { text: "■■■■■■■■■■■■■■■■■■■■" } });
+
+  tl.set(navbar, { y: "-100%" });
+  tl.set(circle, { opacity: 0, x: "-0vw", y: "-170vh", rotate: -90 });
+  tl.to(text, { y: "0rem", ease: "expo.out", duration: 0.5 });
+  tl.to(overlay, { opacity: 0 }, "<");
+  tl.set(circle, { opacity: 1 });
+  tl.to(text, {
+    duration: 1.5,
+    ease: "expo.inOut",
+    scrambleText: { text: origString, chars: "■" },
+  });
+  tl.to(circle, { y: "0vh", ease: "bounce.out", duration: 2, delay: -0.6 });
+  tl.to(circle, {
+    x: "50vw",
+    rotate: 0,
+    duration: 1.3,
+    ease: "linear",
+    delay: -1.3,
+  });
+  tl.to(circle, { rotate: 5, duration: 0.6, ease: "elastic.out(1,0.3)" });
+
+  tl.to(navbar, { y: "", ease: "expo.inOut", duration: 0.4, delay: 0.2 });
+  tl.set(overlay, { display: "none", opacity: "" });
+
+  // return tl.then(() => {});
+};
+
+/////////////////////////////////////
 
 const homeInit = (page = document) => {
   gsap.registerPlugin(ScrollTrigger);
@@ -46,4 +88,4 @@ const homeCleanup = (page) => {
   }
 };
 
-export { homeInit, homeCleanup };
+export { homeInit, homeCleanup, homeEnter };

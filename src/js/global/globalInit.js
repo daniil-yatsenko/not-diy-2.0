@@ -1,7 +1,7 @@
 import { navbarSelector } from "./navigation.js";
 import { lenisInit } from "./lenis.js";
 import { componentsInit } from "../components/index.js";
-import { loaderAnimation } from "./loader";
+import { loaderAnimation, bypassLoaderAnimation } from "./loader";
 
 var lenisMain = lenisInit();
 // var lenisMain;
@@ -11,6 +11,7 @@ const globalInit = async () => {
   navbarSelector();
   componentsInit(document);
   await loaderAnimation();
+  // await bypassLoaderAnimation();
   console.log("global init");
 };
 

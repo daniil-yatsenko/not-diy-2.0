@@ -5,7 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import globalInit from "./global/globalInit.js";
 import { lenisMain } from "./global/globalInit.js";
-import { homeInit, homeCleanup } from "./pages/home.js";
+import { homeInit, homeCleanup, homeEnter } from "./pages/home.js";
 import { componentsInit, componentsCleanup } from "./components/index.js";
 
 gsap.defaults({
@@ -58,7 +58,6 @@ barba.init({
       once() {
         console.log("default transition - once");
       },
-
       leave() {
         console.log("default transition - leave");
       },
@@ -70,11 +69,31 @@ barba.init({
         lenisMain.resize();
       },
     },
+    {
+      name: "home-transition",
+      to: { namespace: ["home"] },
+      async once(data) {
+        await homeEnter(data.next.container);
+        console.log("home transition - once");
+      },
+      async enter(data) {
+        console.log("home transition - enter");
+        lenisMain.scrollTo(0);
+        homeEnter(data.next.container);
+      },
+      afterEnter() {
+        console.log("home transition - after enter");
+        lenisMain.resize();
+      },
+      leave() {
+        console.log("home transition - leave");
+      },
+    },
   ],
 });
 
-barba.hooks.beforeOnce(() => {
-  globalInit();
+barba.hooks.beforeOnce(async () => {
+  await globalInit();
 });
 
 barba.hooks.after(() => {

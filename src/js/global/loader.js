@@ -29,6 +29,10 @@ async function stopCSSAnimation() {
 
 const loaderAnimation = async () => {
   gsap.registerPlugin(MorphSVGPlugin);
+
+  const body = document.querySelector("body");
+  body.style.overflow = "hidden";
+
   let tl = gsap.timeline();
 
   // wait until the loader
@@ -96,30 +100,30 @@ const loaderAnimation = async () => {
   //
 
   const loader = document.querySelector(".loader");
-  const overlay = document.querySelector(".overlay");
-  const navbar = document.querySelector(".navbar");
 
-  tl.set(loader, { borderBottom: "1px solid black" });
-  tl.set(navbar, { y: "-100%" });
-  tl.to(loader, {
-    y: "-120vh",
-    duration: 1.5,
-    delay: 0.3,
-    ease: "expo.inOut",
-  });
-  tl.to(
-    loader,
-    {
-      borderBottomLeftRadius: "40vw",
-      borderBottomRightRadius: "40vw",
+  return new Promise((resolve) => {
+    tl.to(loader, {
+      y: "-120vh",
       duration: 1,
-    },
-    "<"
-  );
-  tl.to(navbar, { y: "", ease: "expo.inOut", duration: 0.4, delay: -0.2 });
-  tl.set(loader, { display: "none", y: "" });
-  tl.set(overlay, { display: "none" });
+      delay: 0.3,
+      ease: "expo.inOut",
+    });
+
+    // Fire return earlier than the timeline ends
+    tl.call(resolve, [], "-=0.5");
+
+    tl.set(loader, { display: "none", y: "" });
+    tl.set(body, { overflow: "" });
+  });
+};
+
+const bypassLoaderAnimation = async () => {
+  const loader = document.querySelector(".loader");
+  let tl = gsap.timeline();
+
+  tl.to(loader, { opacity: 0, delay: 0.2 });
+  tl.set(loader, { opacity: "", display: "none" });
   return tl.then(() => {});
 };
 
-export { loaderAnimation };
+export { loaderAnimation, bypassLoaderAnimation };
