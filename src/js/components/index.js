@@ -13,6 +13,7 @@ export const componentsInit = (page) => {
 };
 
 export const componentsCleanup = (page) => {
+  tableRowsCleanup(page);
   thumbnailsCleanup(page);
   figureCleanup(page);
   buttonsCleanup(page);
