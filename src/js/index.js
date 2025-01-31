@@ -57,6 +57,7 @@ barba.init({
       name: "default-transition",
       once() {
         console.log("default transition - once");
+        gsap.set(document.querySelector(".overlay"), { display: "none" });
       },
       leave() {
         console.log("default transition - leave");

@@ -95,12 +95,8 @@ export const tableRowsInit = (page) => {
         const hoverTl = hoverTimeline(description, descriptionAnimationDiv);
 
         // Create event listeners for hover
-        const hoverInListener = () =>
-          // rowHoverIn(description, descriptionAnimationDiv);
-          hoverTl.play();
-        const hoverOutListener = () =>
-          // rowHoverOut(description, descriptionAnimationDiv);
-          hoverTl.reverse();
+        const hoverInListener = () => hoverTl.play();
+        const hoverOutListener = () => hoverTl.reverse();
 
         // Add to WeakMap for cleanup
         eventListenersMap.set(row, { hoverInListener, hoverOutListener });
@@ -110,7 +106,7 @@ export const tableRowsInit = (page) => {
       }
     });
   });
-  return;
+  // return;
 };
 
 export const tableRowsCleanup = (page) => {
@@ -124,11 +120,11 @@ export const tableRowsCleanup = (page) => {
     rows.forEach((row) => {
       const listeners = eventListenersMap.get(row);
       if (listeners) {
-        row.removeEventListener("mouseover", row.hoverInListener);
-        row.removeEventListener("mouseout", row.hoverOutListener);
+        row.removeEventListener("mouseenter", listeners.hoverInListener);
+        row.removeEventListener("mouseleave", listeners.hoverOutListener);
         eventListenersMap.delete(row);
       }
     });
   });
-  return;
+  // return;
 };

@@ -2,14 +2,19 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { lenisMain } from "../global/globalInit.js";
 import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
+import { playHomeEnter } from "../animationConfig";
 
 const homeEnter = async (page) => {
-  // return;
   gsap.registerPlugin(ScrambleTextPlugin);
   const navbar = document.querySelector(".navbar");
   const overlay = document.querySelector(".overlay");
   const circle = page.querySelector("[hero-image]");
   const text = page.querySelector(".hero_text-wrapper").firstChild;
+
+  if (playHomeEnter == false) {
+    gsap.set(overlay, { display: "none" });
+    return;
+  }
 
   let tl = gsap.timeline();
 
@@ -36,10 +41,10 @@ const homeEnter = async (page) => {
   });
   tl.to(circle, { rotate: 5, duration: 0.6, ease: "elastic.out(1,0.3)" });
 
-  tl.to(navbar, { y: "", ease: "expo.inOut", duration: 0.4, delay: 0.2 });
+  tl.to(navbar, { y: "", ease: "expo.inOut", duration: 0.5, delay: 0.2 });
   tl.set(overlay, { display: "none", opacity: "" });
 
-  // return tl.then(() => {});
+  return tl.then(() => {});
 };
 
 /////////////////////////////////////
