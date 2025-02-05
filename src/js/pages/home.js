@@ -8,11 +8,12 @@ const homeEnter = async (page) => {
   gsap.registerPlugin(ScrambleTextPlugin);
   const navbar = document.querySelector(".navbar");
   const overlay = document.querySelector(".overlay");
+  const loader = document.querySelector(".loader");
   const circle = page.querySelector("[hero-image]");
   const text = page.querySelector(".hero_text-wrapper").firstChild;
 
   if (playHomeEnter == false) {
-    gsap.set(overlay, { display: "none" });
+    gsap.set([overlay, loader], { display: "none" });
     return;
   }
 
@@ -42,7 +43,7 @@ const homeEnter = async (page) => {
   tl.to(circle, { rotate: 5, duration: 0.6, ease: "elastic.out(1,0.3)" });
 
   tl.to(navbar, { y: "", ease: "expo.inOut", duration: 0.5, delay: 0.2 });
-  tl.set(overlay, { display: "none", opacity: "" });
+  tl.set([overlay, loader], { display: "none", opacity: "" });
 
   return tl.then(() => {});
 };

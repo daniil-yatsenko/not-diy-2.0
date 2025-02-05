@@ -7,6 +7,7 @@ import globalInit from "./global/globalInit.js";
 import { lenisMain } from "./global/globalInit.js";
 import { homeInit, homeCleanup, homeEnter } from "./pages/home.js";
 import { componentsInit, componentsCleanup } from "./components/index.js";
+import { servicesEnter } from "./pages/services";
 
 gsap.defaults({
   ease: "power2.inOut",
@@ -56,13 +57,15 @@ barba.init({
     {
       name: "default-transition",
       once() {
-        console.log("default transition - once");
         gsap.set(document.querySelector(".overlay"), { display: "none" });
+        console.log("default transition - once");
       },
       leave() {
+        gsap.set(document.querySelector(".overlay"), { display: "block" });
         console.log("default transition - leave");
       },
       enter(data) {
+        gsap.set(document.querySelector(".overlay"), { display: "none" });
         console.log("default transition - enter");
         lenisMain.scrollTo(0);
       },
@@ -88,6 +91,25 @@ barba.init({
       },
       leave() {
         console.log("home transition - leave");
+      },
+    },
+    {
+      name: "services-transition",
+      to: { namespace: ["services"] },
+      sync: false,
+      async once(data) {
+        lenisMain.scrollTo(0, { duration: 0 });
+        servicesEnter(data.next.container);
+      },
+      async enter(data) {
+        lenisMain.scrollTo(0, { duration: 0 });
+        servicesEnter(data.next.container);
+      },
+      afterEnter() {
+        lenisMain.resize();
+      },
+      leave() {
+        gsap.set(document.querySelector(".overlay"), { display: "block" });
       },
     },
   ],

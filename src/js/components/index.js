@@ -4,6 +4,7 @@ import { figureInit, figureCleanup } from "./rotateFigure.js";
 import { tableRowsInit, tableRowsCleanup } from "./table.js";
 import { buttonsInit, buttonsCleanup } from "./buttons.js";
 import { headingsInit, headingsCleanup } from "./headings.js";
+import { formInit } from "./contactForm.js";
 
 export const componentsInit = (page) => {
   headingsInit(page);
@@ -11,6 +12,7 @@ export const componentsInit = (page) => {
   figureInit(page);
   tableRowsInit(page);
   buttonsInit(page);
+  formInit(page);
   console.log("components init");
 };
 

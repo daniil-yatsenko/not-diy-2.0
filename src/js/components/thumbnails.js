@@ -5,9 +5,9 @@ import { gsap } from "gsap";
 function thumbnailOnHover(event) {
   const magnet = event.currentTarget;
   const bounding = magnet.getBoundingClientRect();
-  const strength = 25;
+  const strength = 15;
   const innerTarget = magnet.children;
-  const innerStrength = 25;
+  const innerStrength = 15;
 
   const offsetX =
     ((event.clientX - bounding.left) / magnet.offsetWidth - 0.5) *
@@ -21,7 +21,7 @@ function thumbnailOnHover(event) {
     y: offsetY + "em",
     rotate: "0.001deg",
     ease: "power4.out",
-    duration: 0.2,
+    duration: 0.6,
   });
 
   if (innerTarget) {
@@ -37,13 +37,12 @@ function thumbnailOnHover(event) {
       y: innerOffsetY + "em",
       rotate: "0.001deg",
       ease: "power2.out",
-      duration: 0.8,
+      duration: 1,
     });
   }
 }
 
 function thumbnailOffHover(event) {
-  console.log("mouse leave");
   const magnet = event.currentTarget;
   const innerTarget = magnet.firstChild;
 
@@ -51,8 +50,7 @@ function thumbnailOffHover(event) {
     x: "0em",
     y: "0em",
     ease: "elastic.out(1, 0.3)",
-    duration: 1.6,
-    clearProps: "all",
+    duration: 0.8,
   });
 
   if (innerTarget) {
@@ -60,8 +58,7 @@ function thumbnailOffHover(event) {
       x: "0em",
       y: "0em",
       ease: "elastic.out(1, 0.3)",
-      duration: 2,
-      clearProps: "all",
+      duration: 1.2,
     });
   }
 }
@@ -72,6 +69,7 @@ const thumbnailsInit = (page) => {
   let thumbnails = page.querySelectorAll(".project-thumbnail_image-wrapper");
 
   thumbnails.forEach((thumbnail) => {
+    gsap.set(thumbnail.children, { scale: 1.05 });
     thumbnail.addEventListener("mousemove", thumbnailOnHover);
     thumbnail.addEventListener("mouseleave", thumbnailOffHover);
   });
