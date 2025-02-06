@@ -8,6 +8,7 @@ import { lenisMain } from "./global/globalInit.js";
 import { homeInit, homeCleanup, homeEnter } from "./pages/home.js";
 import { componentsInit, componentsCleanup } from "./components/index.js";
 import { servicesEnter } from "./pages/services";
+import { defaultLeave, defaultEnter } from "./global/globalTransitions.js";
 
 gsap.defaults({
   ease: "power2.inOut",
@@ -56,21 +57,18 @@ barba.init({
   transitions: [
     {
       name: "default-transition",
-      once() {
-        gsap.set(document.querySelector(".overlay"), { display: "none" });
+      async once() {
+        await defaultEnter();
         console.log("default transition - once");
       },
-      leave() {
-        gsap.set(document.querySelector(".overlay"), { display: "block" });
+      async leave() {
+        await defaultLeave();
         console.log("default transition - leave");
       },
-      enter(data) {
-        gsap.set(document.querySelector(".overlay"), { display: "none" });
-        console.log("default transition - enter");
-        lenisMain.scrollTo(0);
-      },
-      afterEnter() {
-        lenisMain.resize();
+      enter() {},
+      after() {
+        defaultEnter();
+        console.log("default transition - after");
       },
     },
     {
@@ -80,17 +78,14 @@ barba.init({
         await homeEnter(data.next.container);
         console.log("home transition - once");
       },
-      async enter(data) {
-        console.log("home transition - enter");
-        lenisMain.scrollTo(0);
+      enter() {},
+      after(data) {
         homeEnter(data.next.container);
+        console.log("home transition - after");
       },
-      afterEnter() {
-        console.log("home transition - after enter");
-        lenisMain.resize();
-      },
-      leave() {
-        console.log("home transition - leave");
+      async leave() {
+        await defaultLeave();
+        console.log("home default transition - leave");
       },
     },
     {
@@ -98,32 +93,35 @@ barba.init({
       to: { namespace: ["services"] },
       sync: false,
       async once(data) {
-        lenisMain.scrollTo(0, { duration: 0 });
+        servicesEnter(data.next.container);
+        console.log("services transition - once");
+      },
+      after(data) {
+        console.log("services transition - after");
         servicesEnter(data.next.container);
       },
-      async enter(data) {
-        lenisMain.scrollTo(0, { duration: 0 });
-        servicesEnter(data.next.container);
-      },
-      afterEnter() {
-        lenisMain.resize();
-      },
-      leave() {
-        gsap.set(document.querySelector(".overlay"), { display: "block" });
+      afterEnter() {},
+      async leave() {
+        await defaultLeave();
+        console.log("services default transition - leave");
       },
     },
   ],
 });
 
 barba.hooks.beforeOnce(async () => {
+  lenisMain.scrollTo(0);
   await globalInit();
 });
 
 barba.hooks.after(() => {
+  console.log("lenis resized");
+  lenisMain.resize();
   ScrollTrigger.refresh();
 });
 
 barba.hooks.beforeEnter((data) => {
+  lenisMain.scrollTo(0);
   componentsInit(data.next.container);
 });
 

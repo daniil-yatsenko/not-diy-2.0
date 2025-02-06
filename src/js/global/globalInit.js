@@ -11,8 +11,6 @@ const globalInit = async () => {
   navbarSelector();
   componentsInit(document);
   if (playLoader == true) await loaderAnimation();
-  // await loaderAnimation();
-  // await bypassLoaderAnimation();
   console.log("global init");
 };
 

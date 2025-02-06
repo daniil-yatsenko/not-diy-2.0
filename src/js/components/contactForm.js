@@ -34,6 +34,7 @@ function abcChatGPT(targetElement, className) {
 }
 
 const formInit = (page) => {
+  return;
   console.log("form init");
   const forms = page.querySelector(".w-form");
 
