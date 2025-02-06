@@ -99,22 +99,24 @@ const loaderAnimation = async () => {
   //remove loader while keeping the overlay
   //
 
-  const loader = document.querySelector(".loader");
+  return tl.then(() => {});
 
-  return new Promise((resolve) => {
-    tl.to(loader, {
-      y: "-120vh",
-      duration: 1,
-      delay: 0.3,
-      ease: "expo.inOut",
-    });
+  // const loader = document.querySelector(".loader");
 
-    // Fire return earlier than the timeline ends
-    tl.call(resolve, [], "-=0.5");
+  // return new Promise((resolve) => {
+  //   tl.to(loader, {
+  //     y: "-120vh",
+  //     duration: 1,
+  //     delay: 0.3,
+  //     ease: "expo.inOut",
+  //   });
 
-    tl.set(loader, { display: "none", y: "" });
-    tl.set(body, { overflow: "" });
-  });
+  //   // Fire return earlier than the timeline ends
+  //   tl.call(resolve, [], "-=0.5");
+
+  //   tl.set(loader, { display: "none", y: "" });
+  //   tl.set(body, { overflow: "" });
+  // });
 };
 
 const bypassLoaderAnimation = async () => {

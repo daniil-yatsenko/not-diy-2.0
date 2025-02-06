@@ -85,7 +85,6 @@ barba.init({
       },
       async leave() {
         await defaultLeave();
-        console.log("home default transition - leave");
       },
     },
     {

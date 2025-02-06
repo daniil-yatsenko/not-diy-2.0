@@ -5,6 +5,10 @@ gsap.defaults({
   duration: 0.3,
 });
 
+const navbar = document.querySelector(".navbar");
+const overlay = document.querySelector(".overlay");
+const loader = document.querySelector(".loader");
+
 function getPosition(el) {
   const rect = el.getBoundingClientRect();
   return {
@@ -15,13 +19,21 @@ function getPosition(el) {
 }
 
 const servicesEnter = async (page) => {
-  window.scrollTo(0, 0);
-  const overlay = document.querySelector(".overlay");
-  const loader = document.querySelector(".loader");
   const tl = gsap.timeline();
   const h2s = page.querySelectorAll("h2");
 
-  tl.set(loader, { display: "none" });
+  if (window.getComputedStyle(loader).display === "flex") {
+    // tl.to(loader, { opacity: 0 });
+    tl.to(loader, {
+      y: "120vh",
+      duration: 1,
+      delay: 0.2,
+      ease: "expo.inOut",
+    });
+  }
+
+  tl.set(navbar, { y: "-100%" });
+  tl.set(loader, { display: "none", y: "" });
   tl.set(overlay, {
     display: "block",
   });
@@ -32,15 +44,15 @@ const servicesEnter = async (page) => {
     h2Copy.className = "heading-style-h2";
     h2Copy.textContent = h2.textContent;
     h2Copy.setAttribute("data-animation", "h2-copy");
+    h2Copy.style.opacity = 0;
     tl.set(wrapper, {
+      opacity: 0,
       position: "fixed",
       top: getPosition(h2).y - getPosition(page).y,
     });
-
+    tl.set(h2Copy, { opacity: 0, y: "4rem" });
     wrapper.appendChild(h2Copy);
     overlay.appendChild(wrapper);
-
-    tl.set(h2Copy, { opacity: 0, y: "4rem" });
   });
 
   let h2Copies = overlay.querySelectorAll("[data-animation=h2-copy]");
@@ -50,7 +62,7 @@ const servicesEnter = async (page) => {
     const revealTl = gsap.timeline();
     const delay = index == 0 ? 0 : 0.05;
 
-    tl.set(wrapper, { overflow: "hidden" });
+    tl.set(wrapper, { overflow: "hidden", opacity: 1 });
 
     revealTl.to(element, {
       opacity: 1,
@@ -72,6 +84,7 @@ const servicesEnter = async (page) => {
       });
     },
   });
+  tl.to(navbar, { y: "", ease: "expo.inOut", duration: 0.5, delay: -0.2 });
   tl.to(overlay, { opacity: "" });
 };
 

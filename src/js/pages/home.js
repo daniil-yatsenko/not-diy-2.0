@@ -24,9 +24,16 @@ const homeEnter = async (page) => {
 
   tl.set(navbar, { y: "-100%" });
   tl.set(circle, { opacity: 0, x: "-0vw", y: "-170vh", rotate: -90 });
-  tl.to(text, { y: "0rem", ease: "expo.out", duration: 0.5 });
+  tl.to(loader, {
+    y: "-120vh",
+    duration: 1,
+    delay: 0.3,
+    ease: "expo.inOut",
+  });
+  tl.to(text, { y: "0rem", ease: "expo.out", duration: 0.5, delay: -0.4 });
   tl.to(overlay, { opacity: 0 }, "<");
   tl.set(circle, { opacity: 1 });
+  tl.set(body, { overflow: "" });
   tl.to(text, {
     duration: 1.5,
     ease: "expo.inOut",
@@ -43,7 +50,7 @@ const homeEnter = async (page) => {
   tl.to(circle, { rotate: 5, duration: 0.6, ease: "elastic.out(1,0.3)" });
 
   tl.to(navbar, { y: "", ease: "expo.inOut", duration: 0.5, delay: 0.2 });
-  tl.set([overlay, loader], { display: "none", opacity: "" });
+  tl.set([overlay, loader], { display: "none", opacity: "", y: "" });
 
   return tl.then(() => {});
 };
