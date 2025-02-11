@@ -22,6 +22,7 @@ function hoverTimeline(description, animationDiv) {
 }
 
 export const tableRowsInit = (page) => {
+  gsap.registerPlugin(ScrollTrigger);
   const tables = page.querySelectorAll(".table");
 
   tables.forEach((table) => {
@@ -51,6 +52,8 @@ export const tableRowsInit = (page) => {
       ScrollTrigger.create({
         trigger: rowAnimationDiv,
         start: "bottom 90%",
+        end: "bottom 10%",
+        // markers: true,
         onEnter: () => {
           gsap.to(rowAnimationDiv, {
             width: "100%",

@@ -9,6 +9,7 @@ import { homeInit, homeCleanup, homeEnter } from "./pages/home.js";
 import { componentsInit, componentsCleanup } from "./components/index.js";
 import { servicesEnter } from "./pages/services";
 import { defaultLeave, defaultEnter } from "./global/globalTransitions.js";
+import { projectEnter, projectLeave } from "./pages/projectPage.js";
 
 gsap.defaults({
   ease: "power2.inOut",
@@ -103,6 +104,24 @@ barba.init({
       async leave() {
         await defaultLeave();
         console.log("services default transition - leave");
+      },
+    },
+    {
+      name: "project-transition",
+      to: { namespace: ["project"] },
+      sync: false,
+      async once(data) {
+        await defaultEnter();
+        console.log("default transition - once");
+      },
+      after(data) {
+        projectEnter(data);
+        console.log("project transition - after");
+      },
+      afterEnter() {},
+      async leave(data) {
+        await projectLeave(data);
+        console.log("project transition - leave");
       },
     },
   ],
