@@ -1,5 +1,6 @@
 import { gsap } from "gsap";
 import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
+import { lenisMain } from "./globalInit";
 
 gsap.defaults({
   ease: "power2.inOut",
@@ -32,10 +33,12 @@ const loaderAnimation = async () => {
 
   const body = document.querySelector("body");
   body.style.overflow = "hidden";
-
   let tl = gsap.timeline();
 
-  // wait until the loader
+  lenisMain.scrollTo(0, 0);
+  lenisMain.stop();
+
+  // wait until the loader finishes playing
   await stopCSSAnimation();
 
   const wrapper = document.querySelector(".loader_wrapper");
@@ -95,28 +98,7 @@ const loaderAnimation = async () => {
     },
   });
 
-  //
-  //remove loader while keeping the overlay
-  //
-
   return tl.then(() => {});
-
-  // const loader = document.querySelector(".loader");
-
-  // return new Promise((resolve) => {
-  //   tl.to(loader, {
-  //     y: "-120vh",
-  //     duration: 1,
-  //     delay: 0.3,
-  //     ease: "expo.inOut",
-  //   });
-
-  //   // Fire return earlier than the timeline ends
-  //   tl.call(resolve, [], "-=0.5");
-
-  //   tl.set(loader, { display: "none", y: "" });
-  //   tl.set(body, { overflow: "" });
-  // });
 };
 
 const bypassLoaderAnimation = async () => {

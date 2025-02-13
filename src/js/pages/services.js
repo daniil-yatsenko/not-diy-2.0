@@ -1,4 +1,5 @@
 import { gsap } from "gsap";
+import { lenisMain } from "../global/globalInit";
 
 gsap.defaults({
   ease: "power2.inOut",
@@ -22,8 +23,8 @@ const servicesEnter = async (page) => {
   const tl = gsap.timeline();
   const h2s = page.querySelectorAll("h2");
 
+  lenisMain.stop();
   if (window.getComputedStyle(loader).display === "flex") {
-    // tl.to(loader, { opacity: 0 });
     tl.to(loader, {
       y: "120vh",
       duration: 1,
@@ -86,6 +87,7 @@ const servicesEnter = async (page) => {
   });
   tl.to(navbar, { y: "", ease: "expo.inOut", duration: 0.5, delay: -0.2 });
   tl.to(overlay, { opacity: "" });
+  lenisMain.start();
 };
 
 export { servicesEnter };
