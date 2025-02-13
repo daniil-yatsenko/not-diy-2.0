@@ -32,7 +32,6 @@ const loaderAnimation = async () => {
   gsap.registerPlugin(MorphSVGPlugin);
 
   const body = document.querySelector("body");
-  body.style.overflow = "hidden";
   let tl = gsap.timeline();
 
   lenisMain.scrollTo(0, 0);
