@@ -36,7 +36,7 @@ const loaderAnimation = async () => {
   let tl = gsap.timeline();
 
   lenisMain.scrollTo(0, 0);
-  lenisMain.stop();
+  // lenisMain.stop();
 
   // wait until the loader finishes playing
   await stopCSSAnimation();

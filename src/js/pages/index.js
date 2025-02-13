@@ -1,3 +1,7 @@
+//
+// NOT USED - BARBA.JS IMPLEMENTATION INSTEAD
+//
+
 import globalInit from "../global/globalInit.js";
 import { homeInit } from "../pages/home";
 import serviceInit from "../pages/service";

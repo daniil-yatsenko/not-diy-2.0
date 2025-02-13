@@ -24,7 +24,7 @@ const homeEnter = async (page) => {
     return;
   }
 
-  lenisMain.stop();
+  // lenisMain.stop();
   tl.set(text, { y: "10rem", scrambleText: { text: "■■■■■■■■■■■■■■■■■■■■" } });
 
   tl.set(navbar, { y: "-100%" });

@@ -53,7 +53,6 @@ export const tableRowsInit = (page) => {
         trigger: rowAnimationDiv,
         start: "bottom 90%",
         end: "bottom 10%",
-        // markers: true,
         onEnter: () => {
           gsap.to(rowAnimationDiv, {
             width: "100%",

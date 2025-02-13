@@ -110,8 +110,8 @@ barba.init({
       to: { namespace: ["project"] },
       sync: false,
       async once(data) {
-        await defaultEnter();
-        console.log("default transition - once");
+        projectEnter(data);
+        console.log("project transition - once");
       },
       after(data) {
         projectEnter(data);
