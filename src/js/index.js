@@ -100,7 +100,6 @@ barba.init({
         console.log("services transition - after");
         servicesEnter(data.next.container);
       },
-      afterEnter() {},
       async leave() {
         await defaultLeave();
         console.log("services default transition - leave");
@@ -120,7 +119,7 @@ barba.init({
       },
       afterEnter() {},
       async leave(data) {
-        await projectLeave(data);
+        await projectLeave(data.current.container, data.next.url.path);
         console.log("project transition - leave");
       },
     },

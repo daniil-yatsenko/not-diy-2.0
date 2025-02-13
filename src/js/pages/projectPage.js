@@ -2,56 +2,39 @@ import { gsap } from "gsap";
 import { defaultLeave, defaultEnter } from "../global/globalTransitions";
 import { thumbnailsCleanup } from "../components/thumbnails";
 
-const overlay = document.querySelector(".overlay");
-const loader = overlay.querySelector(".loader");
-const navbar = document.querySelector(".navbar");
-
-const projectLeave = async (data) => {
-  const currentPage = data.current.container;
-  const path = data.next.url.path;
+const projectLeave = async (currentPage, nextPath) => {
   const currentImage = [...currentPage.querySelectorAll("a")].find(
-    (a) => a.getAttribute("href") === path
+    (a) => a.getAttribute("href") === nextPath
   );
-  if (!currentImage) return defaultLeave();
 
-  let tl = gsap.timeline();
-  thumbnailsCleanup(currentPage);
+  if (currentImage) {
+    thumbnailsCleanup(currentPage);
+    gsap.to(currentImage, { x: "-100vw", duration: 0.75, ease: "expo.inOut" });
+  }
 
-  tl.set(loader, { display: "flex", opacity: "" });
-  tl.set(overlay, { y: "-120vh", display: "block" });
-  tl.to(currentImage, { x: "-100vw", duration: 0.75, ease: "expo.inOut" }, "<");
-  tl.to(navbar, { y: "-100%", ease: "expo.inOut", duration: 0.5 }, "<");
-  tl.to(overlay, { y: "", duration: 1, delay: -0.4, ease: "expo.inOut" });
-
-  tl.set(navbar, { y: "" });
-
-  return tl.then(() => {});
+  await defaultLeave();
 };
 
 const projectEnter = async (data) => {
   const nextPage = data.next.container;
-  const image = nextPage.querySelector("[cover-image-desktop]");
-  let tl = gsap.timeline();
+  const tl = gsap.timeline();
 
-  tl.set(overlay, { y: "", display: "block" });
-  tl.set(navbar, { y: "-100%" });
+  let assets = nextPage.querySelectorAll(".project-assets_asset-wrapper");
+  let hiddenImage = nextPage.querySelector("[cover-image-mobile]");
+  if (window.innerWidth < 768)
+    coverImage = nextPage.querySelector("[cover-image-desktop]");
 
-  tl.set(image, { x: "100vw", duration: 0.75, ease: "expo.inOut" });
-  tl.to(
-    overlay,
-    { y: "100vh", duration: 1, ease: "expo.inOut", delay: 0.3 },
-    "<"
-  );
-  tl.to(image, { x: "", duration: 0.75, ease: "expo.inOut", delay: -0.5 });
-  tl.to(navbar, {
-    y: "",
+  assets = [...assets].filter((asset) => asset !== hiddenImage);
+
+  tl.set(assets, { x: "100vw" });
+  defaultEnter();
+  tl.to(assets, {
+    x: "",
+    duration: 0.75,
     ease: "expo.inOut",
-    duration: 0.5,
-    delay: -0.2,
+    delay: 1,
+    stagger: 0.25,
   });
-
-  tl.set(loader, { display: "none", opacity: "" });
-  tl.set(overlay, { opacity: 1, y: "", display: "none" });
 
   return tl.then(() => {});
 };

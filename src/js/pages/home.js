@@ -59,16 +59,21 @@ const homeEnter = async (page) => {
 
 const homeInit = (page = document) => {
   gsap.registerPlugin(ScrollTrigger);
-  let bgImage = page.querySelector("[hero-image]").firstChild;
+  // let bgImage = page.querySelector("[hero-image]").firstChild;
+  let bgImage = page.querySelector("[hero-image]");
+  let trigger = page.querySelector(".background-image-block");
   let heading = page.querySelector(".hero_text-wrapper").firstChild;
   let section = page.querySelector(".section_hero");
   let stickyParent = page.querySelector(".hero_sticky-parent");
-
-  gsap.set(stickyParent, { height: "150svh" });
-  lenisMain.resize();
-  ScrollTrigger.update();
-
   let tl = gsap.timeline();
+
+  tl.set(stickyParent, {
+    height: "150svh",
+    onComplete: () => {
+      lenisMain.resize();
+      ScrollTrigger.update();
+    },
+  });
 
   tl.to(bgImage, {
     rotate: 180,

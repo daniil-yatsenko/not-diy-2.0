@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import path from "path";
+import fs from "fs";
 
 const configs = {
   main: {
@@ -37,6 +38,10 @@ export default defineConfig({
   server: {
     cors: "*",
     hmr: {},
+    https: {
+      key: fs.readFileSync("certs/localhost-key.pem"),
+      cert: fs.readFileSync("certs/localhost.pem"),
+    },
   },
   build: configs.main, // toggle between "test" and "main" to build respective files
   envDir: "../",

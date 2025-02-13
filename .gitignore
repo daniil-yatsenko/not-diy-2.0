@@ -27,3 +27,5 @@ src/dist/*
 .github
 .devcontainer
 .codesandbox
+
+certs/
