@@ -34,6 +34,13 @@ const initVimeoPlayer = (page) => {
       vimeoElement.setAttribute("data-vimeo-loaded", "true");
       gsap.to(placeholder, { opacity: 0 });
     });
+
+    // error
+    player.on("error", function (error) {
+      gsap.set(placeholder, { opacity: 1 });
+      gsap.set(vimeoElement.querySelector("iframe"), { opacity: 0 });
+      console.error(`Vimeo Player ${index} Error:`, error);
+    });
   });
 };
 
