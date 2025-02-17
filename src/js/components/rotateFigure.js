@@ -7,14 +7,25 @@ const figureInit = (page = document) => {
   let figures = page.querySelectorAll("[animated-figure]");
   let tl = gsap.timeline();
 
+  const mainWrapper = page.querySelector(".main-wrapper");
+
   figures.forEach((figure) => {
+    let rotation = figure.getAttribute("rotate-degrees");
+    if (!rotation) rotation = 60;
+
+    let offsetY = "0";
+    if (figure.getAttribute("paralax") == "true") {
+      offsetY = mainWrapper.offsetHeight / 1.8;
+    }
+
     tl.to(figure, {
-      rotate: 60,
+      rotate: rotation,
+      y: offsetY,
       ease: "linear",
       scrollTrigger: {
-        trigger: figure,
-        start: "top bottom",
-        end: "bottom top",
+        trigger: mainWrapper,
+        start: "top top",
+        end: "bottom bottom",
         scrub: true,
       },
     });

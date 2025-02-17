@@ -56,7 +56,7 @@ const homeEnter = async (page) => {
     duration: 0.6,
     ease: "elastic.out(1,0.3)",
     onComplete: () => {
-      lenisMain.start();
+      // lenisMain.start();
     },
   });
 
