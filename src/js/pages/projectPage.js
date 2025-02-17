@@ -2,7 +2,6 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { defaultLeave, defaultEnter } from "../global/globalTransitions";
 import { thumbnailsCleanup } from "../components/thumbnails";
-import { lenisMain } from "../global/globalInit";
 
 const projectLeave = async (currentPage, nextPath) => {
   const currentImage = [...currentPage.querySelectorAll("a")].find(
@@ -10,7 +9,6 @@ const projectLeave = async (currentPage, nextPath) => {
   );
 
   if (currentImage) {
-    lenisMain.stop();
     thumbnailsCleanup(currentPage);
     gsap.to(currentImage, { x: "-100vw", duration: 0.75, ease: "expo.inOut" });
   }
@@ -30,18 +28,10 @@ const projectEnter = async (data) => {
 
   assets = [...assets].filter((asset) => asset !== hiddenImage);
 
-  lenisMain.stop();
-
   gsap.set(assets, { x: "120%" });
 
   await defaultEnter();
-  // tl.to(assets, {
-  //   x: "",
-  //   duration: 0.75,
-  //   ease: "expo.inOut",
-  //   delay: 1,
-  //   stagger: 0.25,
-  // });
+
   assets.forEach((asset) => {
     ScrollTrigger.create({
       trigger: asset,
@@ -56,9 +46,7 @@ const projectEnter = async (data) => {
     });
   });
 
-  return tl.then(() => {
-    lenisMain.start();
-  });
+  return tl.then(() => {});
 };
 
 export { projectEnter, projectLeave };

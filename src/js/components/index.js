@@ -4,7 +4,7 @@ import { figureInit, figureCleanup } from "./rotateFigure.js";
 import { tableRowsInit, tableRowsCleanup } from "./table.js";
 import { buttonsInit, buttonsCleanup } from "./buttons.js";
 import { headingsInit, headingsCleanup } from "./headings.js";
-import { formInit } from "./contactForm.js";
+import { formInit, formCleanup } from "./contactForm.js";
 import { initVimeoPlayer, vimeoCleanup } from "./video.js";
 
 export const componentsInit = (page) => {
@@ -24,6 +24,7 @@ export const componentsCleanup = (page) => {
   thumbnailsCleanup(page);
   figureCleanup(page);
   buttonsCleanup(page);
+  formCleanup(page);
   vimeoCleanup(page);
   console.log("components cleanup");
 };
