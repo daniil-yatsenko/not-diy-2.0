@@ -1,50 +1,31 @@
 import { gsap } from "gsap";
 import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
 
-function captchaRestart(page) {
-  setTimeout(() => {
-    const captcha = page.querySelector(".g-recaptcha");
+// restart page captcha after Barba.js transition – didn't manage to make this work
+// const captchaRestart = (page) => {
+//   // each captcha should have a unique ID
+//   const captcha = page.querySelector(".g-recaptcha");
 
-    if (captcha) {
-      if (!captcha.id) {
-        captcha.id = "recaptcha-" + Math.floor(Math.random() * 10000);
-      }
-
-      // Forcefully remove and reload the API script
-      const existingScript = document.querySelector(
-        "script[src*='recaptcha/api.js']"
-      );
-      if (existingScript) {
-        existingScript.remove();
-      }
-
-      const script = document.createElement("script");
-      script.src = "https://www.google.com/recaptcha/api.js";
-      script.async = true;
-      script.defer = true;
-      document.body.appendChild(script);
-
-      script.onload = () => {
-        try {
-          grecaptcha.render(captcha.id, {
-            sitekey: "6LeLEmMqAAAAAPjmEnSIGuAzoDGwpDbkAm1ubiYE",
-          });
-        } catch (error) {
-          console.error("Error rendering reCAPTCHA:", error);
-        }
-      };
-    } else {
-      console.error("reCAPTCHA element not found.");
-    }
-  }, 500);
-}
+//   grecaptcha.ready(() => {
+//     if (captcha) {
+//       // const captchaId = captcha.getAttribute("id");
+//       try {
+//         grecaptcha.render(captcha, {
+//           sitekey: "6LeLEmMqAAAAAPjmEnSIGuAzoDGwpDbkAm1ubiYE",
+//         });
+//       } catch (error) {
+//         console.error("Error rendering reCAPTCHA:", error);
+//       }
+//     }
+//   });
+// };
 
 // used for clean up
 const allObservers = new Set();
 
 // toggle is-checked class and styling
 function checkboxObserver(targetElement) {
-  if (!targetElement) return console.log("Target element not found.");
+  if (!targetElement) return;
 
   const observer = new MutationObserver(() => {
     const isChecked = targetElement.classList.contains("w--redirected-checked");
@@ -61,7 +42,7 @@ function checkboxObserver(targetElement) {
 
 // animate email vs phone number field
 function meanOfCommunication(trigger) {
-  if (!trigger) return console.log("radio button trigger not found");
+  if (!trigger) return;
 
   const textField = document.getElementById("contact-details-caption");
   const email = document.getElementById("e-mail");
@@ -70,7 +51,6 @@ function meanOfCommunication(trigger) {
   const tl = gsap.timeline({ paused: true });
   if (textField && email && phone) {
     gsap.set([email, phone, email.parentElement], { height: height });
-    console.log(email);
     gsap.registerPlugin(ScrambleTextPlugin);
     tl.to(textField, {
       duration: 1,
@@ -90,11 +70,9 @@ function meanOfCommunication(trigger) {
   const observer = new MutationObserver(() => {
     const isChecked = trigger.classList.contains("w--redirected-checked");
     if (isChecked) {
-      console.log("radio checked");
       tl.play();
     }
     if (!isChecked) {
-      console.log("radio unchecked");
       tl.reverse();
     }
   });
@@ -108,10 +86,6 @@ function meanOfCommunication(trigger) {
 }
 
 const formInit = (page) => {
-  console.log("form init");
-
-  captchaRestart(page);
-
   const forms = page.querySelectorAll(".w-form");
 
   forms.forEach((form) => {

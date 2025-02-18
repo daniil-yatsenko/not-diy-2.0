@@ -1,5 +1,5 @@
 import { gsap } from "gsap";
-import { lenisMain } from "../global/globalInit";
+import { blockInteractions } from "../global/blockInteractions";
 
 gsap.defaults({
   ease: "power2.inOut",
@@ -23,7 +23,7 @@ const servicesEnter = async (page) => {
   const tl = gsap.timeline();
   const h2s = page.querySelectorAll("h2");
 
-  // lenisMain.stop();
+  blockInteractions(true);
   if (window.getComputedStyle(loader).display === "flex") {
     tl.to(loader, {
       y: "120vh",
@@ -80,6 +80,7 @@ const servicesEnter = async (page) => {
     opacity: 0,
     display: "none",
     onComplete: () => {
+      blockInteractions(false);
       h2Copies.forEach((element) => {
         element.remove();
       });
@@ -87,7 +88,6 @@ const servicesEnter = async (page) => {
   });
   tl.to(navbar, { y: "", ease: "expo.inOut", duration: 0.5, delay: -0.2 });
   tl.to(overlay, { opacity: "" });
-  // lenisMain.start();
 };
 
 export { servicesEnter };

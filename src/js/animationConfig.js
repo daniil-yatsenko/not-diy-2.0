@@ -1,3 +1,3 @@
-let playLoader = false;
-let playHomeEnter = false;
+let playLoader = true;
+let playHomeEnter = true;
 export { playLoader, playHomeEnter };

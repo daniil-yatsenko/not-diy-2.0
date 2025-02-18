@@ -2,8 +2,10 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { defaultLeave, defaultEnter } from "../global/globalTransitions";
 import { thumbnailsCleanup } from "../components/thumbnails";
+import { blockInteractions } from "../global/blockInteractions";
 
 const projectLeave = async (currentPage, nextPath) => {
+  blockInteractions(true);
   const currentImage = [...currentPage.querySelectorAll("a")].find(
     (a) => a.getAttribute("href") === nextPath
   );
@@ -19,6 +21,7 @@ const projectLeave = async (currentPage, nextPath) => {
 const projectEnter = async (data) => {
   gsap.registerPlugin(ScrollTrigger);
 
+  blockInteractions(true);
   const nextPage = data.next.container;
   const tl = gsap.timeline();
   let assets = nextPage.querySelectorAll(".project-assets_asset-wrapper");
@@ -46,7 +49,9 @@ const projectEnter = async (data) => {
     });
   });
 
-  return tl.then(() => {});
+  return tl.then(() => {
+    blockInteractions(false);
+  });
 };
 
 export { projectEnter, projectLeave };

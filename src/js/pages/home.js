@@ -3,6 +3,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { lenisMain } from "../global/globalInit.js";
 import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
 import { playHomeEnter } from "../animationConfig";
+import { blockInteractions } from "../global/blockInteractions";
 
 const homeEnter = async (page) => {
   // calculate the height of circle's drop on homeEnter
@@ -24,7 +25,7 @@ const homeEnter = async (page) => {
     return;
   }
 
-  // lenisMain.stop();
+  blockInteractions(true);
   tl.set(text, { y: "10rem", scrambleText: { text: "■■■■■■■■■■■■■■■■■■■■" } });
 
   tl.set(navbar, { y: "-100%" });
@@ -56,7 +57,7 @@ const homeEnter = async (page) => {
     duration: 0.6,
     ease: "elastic.out(1,0.3)",
     onComplete: () => {
-      // lenisMain.start();
+      blockInteractions(false);
     },
   });
 
@@ -70,7 +71,6 @@ const homeEnter = async (page) => {
 
 const homeInit = (page = document) => {
   gsap.registerPlugin(ScrollTrigger);
-  // let bgImage = page.querySelector("[hero-image]").firstChild;
   let bgImage = page.querySelector("[hero-image]");
   let section = page.querySelector(".section_hero");
   let stickyParent = page.querySelector(".hero_sticky-parent");

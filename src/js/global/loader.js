@@ -34,9 +34,6 @@ const loaderAnimation = async () => {
   const body = document.querySelector("body");
   let tl = gsap.timeline();
 
-  lenisMain.scrollTo(0, 0);
-  // lenisMain.stop();
-
   // wait until the loader finishes playing
   await stopCSSAnimation();
 

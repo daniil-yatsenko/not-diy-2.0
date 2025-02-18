@@ -1,5 +1,6 @@
 import { gsap } from "gsap";
 import { lenisMain } from "./globalInit";
+import { blockInteractions } from "../global/blockInteractions";
 
 gsap.defaults({
   ease: "power2.inOut",
@@ -13,7 +14,7 @@ const navbar = document.querySelector(".navbar");
 const defaultLeave = async () => {
   let tl = gsap.timeline();
 
-  // lenisMain.stop();
+  blockInteractions(true);
   tl.set(loader, { opacity: 1, display: "flex" });
   tl.set(overlay, { y: "-120vh", display: "block" });
   tl.to(navbar, { y: "-100%", ease: "expo.inOut", duration: 0.5 });
@@ -23,14 +24,14 @@ const defaultLeave = async () => {
   tl.set(navbar, { y: "" });
 
   return tl.then(() => {
-    // lenisMain.start();
+    blockInteractions(false);
   });
 };
 
 const defaultEnter = async () => {
   let tl = gsap.timeline();
 
-  // lenisMain.stop();
+  blockInteractions(true);
   tl.set(overlay, { y: "", display: "block" });
   tl.set(navbar, { y: "-100%" });
   tl.to(overlay, { y: "100vh", duration: 1, ease: "expo.inOut", delay: 0.3 });
@@ -39,7 +40,7 @@ const defaultEnter = async () => {
   tl.set(overlay, { opacity: 1, y: "", display: "none" });
 
   return tl.then(() => {
-    // lenisMain.start();
+    blockInteractions(false);
   });
 };
 

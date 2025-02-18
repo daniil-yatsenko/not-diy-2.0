@@ -127,7 +127,7 @@ barba.init({
 });
 
 barba.hooks.beforeOnce(async () => {
-  lenisMain.scrollTo(0);
+  lenisMain.scrollTo(0, { force: true, immediate: true });
   await globalInit();
 });
 
@@ -138,7 +138,7 @@ barba.hooks.after(() => {
 });
 
 barba.hooks.beforeEnter((data) => {
-  lenisMain.scrollTo(0);
+  lenisMain.scrollTo(0, { force: true, immediate: true });
   componentsInit(data.next.container);
 });
 
