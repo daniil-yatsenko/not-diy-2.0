@@ -1,6 +1,44 @@
 import { gsap } from "gsap";
 import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
 
+function captchaRestart(page) {
+  setTimeout(() => {
+    const captcha = page.querySelector(".g-recaptcha");
+
+    if (captcha) {
+      if (!captcha.id) {
+        captcha.id = "recaptcha-" + Math.floor(Math.random() * 10000);
+      }
+
+      // Forcefully remove and reload the API script
+      const existingScript = document.querySelector(
+        "script[src*='recaptcha/api.js']"
+      );
+      if (existingScript) {
+        existingScript.remove();
+      }
+
+      const script = document.createElement("script");
+      script.src = "https://www.google.com/recaptcha/api.js";
+      script.async = true;
+      script.defer = true;
+      document.body.appendChild(script);
+
+      script.onload = () => {
+        try {
+          grecaptcha.render(captcha.id, {
+            sitekey: "6LeLEmMqAAAAAPjmEnSIGuAzoDGwpDbkAm1ubiYE",
+          });
+        } catch (error) {
+          console.error("Error rendering reCAPTCHA:", error);
+        }
+      };
+    } else {
+      console.error("reCAPTCHA element not found.");
+    }
+  }, 500);
+}
+
 // used for clean up
 const allObservers = new Set();
 
@@ -71,6 +109,9 @@ function meanOfCommunication(trigger) {
 
 const formInit = (page) => {
   console.log("form init");
+
+  captchaRestart(page);
+
   const forms = page.querySelectorAll(".w-form");
 
   forms.forEach((form) => {
