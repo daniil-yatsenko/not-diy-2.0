@@ -1,4 +1,4 @@
-import { navbarSelector } from "./navigation";
+import { navbarSelector, mobileMenu } from "./navigation";
 import { lenisInit } from "./lenis.js";
 import { componentsInit } from "../components/index";
 import { loaderAnimation, bypassLoaderAnimation } from "./loader";
@@ -8,7 +8,8 @@ var lenisMain = lenisInit();
 export { lenisMain };
 
 const globalInit = async () => {
-  navbarSelector();
+  // navbarSelector();
+  mobileMenu();
   componentsInit(document);
   if (playLoader == true) await loaderAnimation();
   console.log("global init");

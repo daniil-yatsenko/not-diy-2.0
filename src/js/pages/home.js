@@ -11,6 +11,7 @@ const homeEnter = async (page) => {
     return -(image.offsetHeight + window.innerHeight) / 2;
   }
 
+  lenisMain.scrollTo(0, { force: true, immediate: true });
   gsap.registerPlugin(ScrambleTextPlugin);
   const navbar = document.querySelector(".navbar");
   const overlay = document.querySelector(".overlay");
