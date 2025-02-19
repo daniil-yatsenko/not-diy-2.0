@@ -95,33 +95,63 @@ const buttonsInitZigZag = (page) => {
   });
 };
 
+const animateButton = (button) => {
+  gsap.registerPlugin(ScrambleTextPlugin);
+  gsap.registerPlugin(SplitText);
+
+  let tl = gsap.timeline({ paused: true });
+  gsap.set(button, { width: button.offsetWidth * 1.02 });
+
+  const split = new SplitText(button, { type: "words,chars" });
+  split.chars.forEach((char) => {
+    tl.set(char, { width: char.offsetWidth });
+  });
+
+  split.chars.forEach((char, index) => {
+    let a = index == 0 ? 0 : -1; // makes delay 0 for 1st character and -0.25 for each subsequent
+
+    tl.to(char, {
+      duration: 0.3,
+      delay: 0.25 * a,
+      scrambleText: {
+        text: "{original}",
+        chars: "■",
+        ease: "expo.inOut",
+      },
+    });
+  });
+
+  return tl;
+};
+
 const buttonsInit = (page) => {
   gsap.registerPlugin(ScrambleTextPlugin);
   gsap.registerPlugin(SplitText);
   const buttons = page.querySelectorAll(".button");
 
   buttons.forEach((button) => {
-    let tl = gsap.timeline({ paused: true });
-    gsap.set(button, { width: button.offsetWidth * 1.02 });
+    let tl = animateButton(button);
+    // let tl = gsap.timeline({ paused: true });
+    // gsap.set(button, { width: button.offsetWidth * 1.02 });
 
-    const split = new SplitText(button, { type: "words,chars" });
-    split.chars.forEach((char) => {
-      tl.set(char, { width: char.offsetWidth });
-    });
+    // const split = new SplitText(button, { type: "words,chars" });
+    // split.chars.forEach((char) => {
+    //   tl.set(char, { width: char.offsetWidth });
+    // });
 
-    split.chars.forEach((char, index) => {
-      let a = index == 0 ? 0 : -1; // makes delay 0 for 1st character and -0.25 for each subsequent
+    // split.chars.forEach((char, index) => {
+    //   let a = index == 0 ? 0 : -1; // makes delay 0 for 1st character and -0.25 for each subsequent
 
-      tl.to(char, {
-        duration: 0.3,
-        delay: 0.25 * a,
-        scrambleText: {
-          text: "{original}",
-          chars: "■",
-          ease: "expo.inOut",
-        },
-      });
-    });
+    //   tl.to(char, {
+    //     duration: 0.3,
+    //     delay: 0.25 * a,
+    //     scrambleText: {
+    //       text: "{original}",
+    //       chars: "■",
+    //       ease: "expo.inOut",
+    //     },
+    //   });
+    // });
     // Create event listeners for hover
     const hoverInListener = () => tl.play();
     const hoverOutListener = () => tl.reverse();
@@ -147,4 +177,4 @@ const buttonsCleanup = (page) => {
   });
 };
 
-export { buttonsInit, buttonsCleanup };
+export { buttonsInit, buttonsCleanup, animateButton };
