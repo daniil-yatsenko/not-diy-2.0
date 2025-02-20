@@ -1,12 +1,12 @@
 import { gsap } from "gsap";
 import { blockInteractions } from "../global/blockInteractions";
+import { navbar } from "../global/navigation";
 
 gsap.defaults({
   ease: "power2.inOut",
   duration: 0.3,
 });
 
-const navbar = document.querySelector(".navbar");
 const overlay = document.querySelector(".overlay");
 const loader = document.querySelector(".loader");
 
@@ -33,7 +33,7 @@ const servicesEnter = async (page) => {
     });
   }
 
-  tl.set(navbar, { y: "-100%" });
+  navbar.hide({ immediate: true });
   tl.set(loader, { display: "none", y: "" });
   tl.set(overlay, {
     display: "block",
@@ -86,7 +86,7 @@ const servicesEnter = async (page) => {
       });
     },
   });
-  tl.to(navbar, { y: "", ease: "expo.inOut", duration: 0.5, delay: -0.2 });
+  tl.add(navbar.show());
   tl.to(overlay, { opacity: "" });
 };
 

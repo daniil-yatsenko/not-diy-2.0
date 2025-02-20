@@ -4,6 +4,7 @@ import { lenisMain } from "../global/globalInit.js";
 import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
 import { playHomeEnter } from "../animationConfig";
 import { blockInteractions } from "../global/blockInteractions";
+import { navbar } from "../global/navigation";
 
 const homeEnter = async (page) => {
   // calculate the height of circle's drop on homeEnter
@@ -13,7 +14,6 @@ const homeEnter = async (page) => {
 
   lenisMain.scrollTo(0, { force: true, immediate: true });
   gsap.registerPlugin(ScrambleTextPlugin);
-  const navbar = document.querySelector(".navbar");
   const overlay = document.querySelector(".overlay");
   const loader = document.querySelector(".loader");
   const circle = page.querySelector("[hero-image]");
@@ -29,7 +29,7 @@ const homeEnter = async (page) => {
   blockInteractions(true);
   tl.set(text, { y: "10rem", scrambleText: { text: "■■■■■■■■■■■■■■■■■■■■" } });
 
-  tl.set(navbar, { y: "-100%" });
+  navbar.hide({ immediate: true });
   tl.set(circle, { opacity: 0, x: "-0vw", y: calcHeight(circle), rotate: -95 });
   tl.to(loader, {
     y: "-120vh",
@@ -62,7 +62,7 @@ const homeEnter = async (page) => {
     },
   });
 
-  tl.to(navbar, { y: "", ease: "expo.inOut", duration: 0.5, delay: 0.2 });
+  tl.add(navbar.show());
   tl.set([overlay, loader], { display: "none", opacity: "", y: "" });
 
   return tl.then(() => {});
