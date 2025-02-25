@@ -10,6 +10,7 @@ import { componentsInit, componentsCleanup } from "./components/index.js";
 import { servicesEnter } from "./pages/services";
 import { defaultLeave, defaultEnter } from "./global/globalTransitions.js";
 import { projectEnter, projectLeave } from "./pages/projectPage.js";
+import { aboutToggleInit, aboutEnter } from "./pages/about.js";
 
 gsap.defaults({
   ease: "power2.inOut",
@@ -44,12 +45,6 @@ barba.init({
     },
     {
       namespace: "work",
-      beforeEnter(data) {},
-      afterEnter(data) {},
-      afterLeave(data) {},
-    },
-    {
-      namespace: "about",
       beforeEnter(data) {},
       afterEnter(data) {},
       afterLeave(data) {},
@@ -121,6 +116,25 @@ barba.init({
       async leave(data) {
         await projectLeave(data.current.container, data.next.url.path);
         console.log("project transition - leave");
+      },
+    },
+    {
+      name: "about-transition",
+      to: { namespace: ["about"] },
+      sync: false,
+      async once(data) {
+        aboutEnter(data.next.container);
+        aboutToggleInit(data.next.container);
+        console.log("about transition - once");
+      },
+      async leave() {
+        await defaultLeave();
+        console.log("about transition - leave");
+      },
+      async after(data) {
+        aboutEnter(data.next.container);
+        aboutToggleInit(data.next.container);
+        console.log("about transition - after");
       },
     },
   ],
