@@ -2,6 +2,24 @@ import { gsap } from "gsap";
 import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
 import { defaultEnter } from "../global/globalTransitions.js";
 
+const changeText = () => {
+  const profText = document.querySelector(".about_prof-copy-wrapper");
+  const persText = document.querySelector(".about_pers-copy-wrapper");
+  const tl = gsap.timeline({ paused: true });
+  const wrapper = profText.parentElement;
+  const currentHeight = wrapper.offsetHeight;
+  console.log(currentHeight);
+
+  tl.set(wrapper, { minHeight: `${currentHeight / 16}rem` });
+  tl.to(profText, { height: "0rem", duration: 0.5, ease: "expo.inOut" });
+  tl.set(persText, { height: "0rem" });
+  tl.set(profText, { display: "none" });
+  tl.set(persText, { display: "block" });
+  tl.to(persText, { height: "auto", duration: 0.5, ease: "expo.inOut" });
+
+  return tl;
+};
+
 const aboutToggleInit = (page) => {
   gsap.registerPlugin(ScrambleTextPlugin);
   const switchBody = page.querySelector(".about_switch-body");
@@ -12,9 +30,6 @@ const aboutToggleInit = (page) => {
   const profCaption = page.querySelector(".about_professional-caption");
   const persCaption = page.querySelector(".about_personal-caption");
   const toggleTl = gsap.timeline({ paused: true });
-  const aboutText = page.querySelector(".about_prof-copy-wrapper");
-  const newText =
-    "lorem ipsum dolor sit amet, consectetur adipiscing elit.\n\nlorem ipsum dolor sit amet, consectetur adipiscing elit.";
 
   toggleTl.to(switchToggle, {
     x: ToggleTravelDistance,
@@ -77,12 +92,16 @@ const aboutToggleInit = (page) => {
     delay: -0.2,
   });
 
+  const textTl = changeText();
+
   let isReversed = false;
   switchBody.addEventListener("click", () => {
     if (isReversed) {
       toggleTl.reverse();
+      textTl.reverse();
     } else {
       toggleTl.play();
+      textTl.play();
     }
     isReversed = !isReversed;
   });
