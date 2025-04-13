@@ -1,25 +1,6 @@
 import { gsap } from "gsap";
 import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
 
-// restart page captcha after Barba.js transition – didn't manage to make this work
-// const captchaRestart = (page) => {
-//   // each captcha should have a unique ID
-//   const captcha = page.querySelector(".g-recaptcha");
-
-//   grecaptcha.ready(() => {
-//     if (captcha) {
-//       // const captchaId = captcha.getAttribute("id");
-//       try {
-//         grecaptcha.render(captcha, {
-//           sitekey: "6LeLEmMqAAAAAPjmEnSIGuAzoDGwpDbkAm1ubiYE",
-//         });
-//       } catch (error) {
-//         console.error("Error rendering reCAPTCHA:", error);
-//       }
-//     }
-//   });
-// };
-
 // used for clean up
 const allObservers = new Set();
 
@@ -29,7 +10,9 @@ function checkboxObserver(targetElement) {
 
   const observer = new MutationObserver(() => {
     const isChecked = targetElement.classList.contains("w--redirected-checked");
-    targetElement.parentElement.classList.toggle("is-checked", isChecked);
+    setTimeout(() => {
+      targetElement.parentElement.classList.toggle("is-checked", isChecked);
+    }, 50);
   });
 
   observer.observe(targetElement, {
