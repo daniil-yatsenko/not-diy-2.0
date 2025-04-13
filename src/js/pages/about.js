@@ -8,7 +8,6 @@ const changeText = () => {
   const tl = gsap.timeline({ paused: true });
   const wrapper = profText.parentElement;
   const currentHeight = wrapper.offsetHeight;
-  console.log(currentHeight);
 
   tl.set(wrapper, { minHeight: `${currentHeight / 16}rem` });
   tl.to(profText, { height: "0rem", duration: 0.5, ease: "expo.inOut" });

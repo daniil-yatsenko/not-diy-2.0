@@ -101,8 +101,6 @@ const homeInit = (page = document) => {
 /////////////////////////////////////
 
 const homeCleanup = (page) => {
-  console.log("home cleanup");
-
   let scrollTriggerInstance;
   scrollTriggerInstance = ScrollTrigger.getById("bgImage");
 

@@ -12,7 +12,5 @@ export const exampleComponent = () => {
   addClass(element, "is-initialized");
 
   // Example event listener
-  element.addEventListener("click", () => {
-    console.log("Example component clicked!");
-  });
+  element.addEventListener("click", () => {});
 };

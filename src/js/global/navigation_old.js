@@ -17,7 +17,6 @@ const mobileMenu = () => {
   gsap.set(overlay, { display: "none" });
 
   const openMenu = () => {
-    console.log("open menu");
     const tl = gsap.timeline();
     tl.set([menuBtn, overlay], { pointerEvents: "none" });
     tl.set(overlay, {
@@ -60,7 +59,6 @@ const mobileMenu = () => {
   };
 
   const closeMenu = () => {
-    console.log("close menu");
     const tl = gsap.timeline();
     tl.add(animateBtnTl.reverse());
     tl.to(

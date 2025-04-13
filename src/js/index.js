@@ -17,8 +17,6 @@ gsap.defaults({
   duration: 0.3,
 });
 
-console.log("Vite connected!");
-
 barba.init({
   views: [
     {
@@ -55,16 +53,13 @@ barba.init({
       name: "default-transition",
       async once() {
         await defaultEnter();
-        console.log("default transition - once");
       },
       async leave() {
         await defaultLeave();
-        console.log("default transition - leave");
       },
       enter() {},
       after() {
         defaultEnter();
-        console.log("default transition - after");
       },
     },
     {
@@ -72,12 +67,10 @@ barba.init({
       to: { namespace: ["home"] },
       async once(data) {
         await homeEnter(data.next.container);
-        console.log("home transition - once");
       },
       enter() {},
       after(data) {
         homeEnter(data.next.container);
-        console.log("home transition - after");
       },
       async leave() {
         await defaultLeave();
@@ -89,15 +82,12 @@ barba.init({
       sync: false,
       async once(data) {
         servicesEnter(data.next.container);
-        console.log("services transition - once");
       },
       after(data) {
-        console.log("services transition - after");
         servicesEnter(data.next.container);
       },
       async leave() {
         await defaultLeave();
-        console.log("services default transition - leave");
       },
     },
     {
@@ -106,16 +96,13 @@ barba.init({
       sync: false,
       async once(data) {
         projectEnter(data);
-        console.log("project transition - once");
       },
       after(data) {
         projectEnter(data);
-        console.log("project transition - after");
       },
       afterEnter() {},
       async leave(data) {
         await projectLeave(data.current.container, data.next.url.path);
-        console.log("project transition - leave");
       },
     },
     {
@@ -125,16 +112,13 @@ barba.init({
       async once(data) {
         aboutEnter(data.next.container);
         aboutToggleInit(data.next.container);
-        console.log("about transition - once");
       },
       async leave() {
         await defaultLeave();
-        console.log("about transition - leave");
       },
       async after(data) {
         aboutEnter(data.next.container);
         aboutToggleInit(data.next.container);
-        console.log("about transition - after");
       },
     },
   ],
@@ -146,7 +130,6 @@ barba.hooks.beforeOnce(async () => {
 });
 
 barba.hooks.after(() => {
-  console.log("lenis resized");
   lenisMain.resize();
   ScrollTrigger.refresh();
 });

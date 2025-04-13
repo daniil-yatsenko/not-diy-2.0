@@ -299,9 +299,6 @@ const navbar = {
     } else this.selectorInit();
     this.resizeListener();
     this.handleMenuClick();
-    // setInterval(() => {
-    //   console.log(this.eventListenersMap);
-    // }, 2000);
   },
 };
 

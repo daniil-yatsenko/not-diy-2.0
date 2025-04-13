@@ -15,7 +15,6 @@ export const componentsInit = (page) => {
   buttonsInit(page);
   formInit(page);
   initVimeoPlayer(page);
-  console.log("components init");
 };
 
 export const componentsCleanup = (page) => {
@@ -26,5 +25,4 @@ export const componentsCleanup = (page) => {
   buttonsCleanup(page);
   formCleanup(page);
   vimeoCleanup(page);
-  console.log("components cleanup");
 };

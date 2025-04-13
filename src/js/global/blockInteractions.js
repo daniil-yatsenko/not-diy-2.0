@@ -6,12 +6,10 @@ const blockInteractions = (choice) => {
     lenisMain.stop();
     blocker.style.overflow = "hidden";
     blocker.style.pointerEvents = "none";
-    console.log("interactions blocked");
   } else {
     blocker.style.overflow = "";
     blocker.style.pointerEvents = "auto";
     lenisMain.start();
-    console.log("interactions unblocked");
   }
 };
 
