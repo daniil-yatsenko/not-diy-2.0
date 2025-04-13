@@ -42,6 +42,18 @@ const initVimeoPlayer = (page) => {
       console.error(`Vimeo Player ${index} Error:`, error);
     });
   });
+
+  const stills = page.querySelectorAll('[data-vimeo-video-id=""]');
+
+  stills.forEach((still) => {
+    const height = still.querySelector("img").offsetHeight;
+    console.log(height);
+
+    gsap.set(still.parentElement, {
+      height: `${height / 16}rem`,
+      display: "flex",
+    });
+  });
 };
 
 const vimeoCleanup = (page) => {
